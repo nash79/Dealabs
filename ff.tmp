@@ -1,0 +1,13 @@
+<script>
+    	const cheerio = require('cheerio');
+      	var request = require('request');
+      	//const {clipboard} = require('electron');
+
+		request('https://www.dealabs.com', function (error, response, body) {
+		  	//clipboard.writeText(body);
+			const $ = cheerio.load(body);
+			console.log($('div[class=threadGrid-title]'));	
+		});
+//console.log(clipboard.readText('selection'));
+		//const $ = cheerio.load(clipboard.readText('selection'))
+    </script>

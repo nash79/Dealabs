@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Listing deals</title>
+  </head>
+  <body>
+  	<h1><center>Deal du mois!!!</center></h1>
+  	<div id='content'>
+  		
+  	</div>
+  	<script>
+    	const cheerio = require('cheerio');
+      	var request = require('request');
+
+		request('https://www.dealabs.com', function (error, response, body) {
+			const $ = cheerio.load(body);
+			$('div[class=threadGrid]').each(function (i, elem) {
+				let titre = $(this).find('a[class="cept-tt thread-link linkPlain thread-title--list"]').attr("title");
+				let ProduitLien = $(this).find('a[class="cept-tt thread-link linkPlain thread-title--list"]').attr("href");
+				let prix = $(this).find('span[class="thread-price text--b vAlign--all-tt cept-tp size--all-l size--fromW3-xl"]').text();
+				let imglien = $(this).find('img').attr("src");
+				let duree = $(this).find('span[class="hide--toW3"]').text();
+				let descriptif = $(this).find('div[class="cept-description-container overflow--wrap-break size--all-s size--fromW3-m"]').text();
+
+				chaine = "<div class='produit'>"+
+						"<div class='clsimg'><img src='"+imglien+"'></div>"+
+						"<a title='"+titre+"' href='"+ProduitLien+"'>"+titre+"</a>"+
+						"<div>"+prix+"</div>"+
+						"<div>"+duree+"</div>"+
+						"<div>"+descriptif+"</div>"+
+						"</div>"
+
+				 document.getElementById("content").innerHTML += chaine;
+			})
+			}
+		);
+
+
+    </script>
+  </body>
+</html>
